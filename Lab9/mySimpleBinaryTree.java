@@ -30,10 +30,21 @@ private static class Node<E> implements Position<E>{
 	public Node<E> getLeftChild(){ return left; }
 	public Node<E> getRightChild(){ return right;} 
 
+	public void setLeft(Node<E> leftNode){
+
+		left  = leftNode;
+	}
+	public void setRight(Node<E> rightNode){
+
+
+		right = rightNode;
+	}
+
+
 	public E getElement(){return element;}
 
 
-}
+	}
 
 
 
@@ -103,14 +114,49 @@ public Position<E> sibling(Position<E> p){
 
 
 
+public Position<E> addRoot(E rootelement){
+
+	Node<E> myNewRootNode = new Node(rootelement, null, null, null);
+	root = myNewRootNode;
+
+	return root;
+
+}
+
+public Position<E> addLeft(Position<E> p, E myvalue){
+
+	Node<E> parentNode = validate(p);
+
+	Node<E> myNewNode = new Node(myvalue, parentNode, null, null);
 
 
+	parentNode.setLeft(myNewNode);
+
+	return myNewNode;
 
 
+}
 
+public Position<E> addRight(Position<E> p, E myvalue){
+
+	Node<E> parentNode = validate(p);
+
+	Node<E> myNewNode = new Node(myvalue, parentNode, null, null);
+
+
+	parentNode.setRight(myNewNode);
+
+	return myNewNode;
+
+
+}
 
 
 
 
 
 }
+
+
+
+
