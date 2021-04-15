@@ -1,4 +1,9 @@
-public class mySimpleBinaryTree<E> implements BinaryTreeInterface<E>{
+
+import java.util.Iterator;
+import java.util.ArrayList; 
+import java.util.List;
+
+public class mySimpleBinaryTree<E> implements BinaryTreeInterface<E>, Iterable<E>{
 	
 
 private int size = 0;
@@ -43,8 +48,10 @@ private static class Node<E> implements Position<E>{
 
 	public E getElement(){return element;}
 
+	public void setElement(E newElement){  element=newElement; }
 
-	}
+
+	} // end of Node class 
 
 
 
@@ -152,10 +159,127 @@ public Position<E> addRight(Position<E> p, E myvalue){
 }
 
 
+public void set(Position<E> p, E myNewElement){
 
+
+	Node<E> myNode = validate(p);
+
+	myNode.setElement(myNewElement);
+
+}
+
+
+public E returnNodeValue(Position<E> p){
+
+	Node<E> myNode = validate(p);
+
+	return myNode.getElement(); 
+
+
+} 
+
+
+public List<Position<E>> children(Position<E> p){
+
+	List<Position<E>> childrenList = new ArrayList<>(2);
+
+	Node<E> my_current_node = validate(p);
+
+	childrenList.add(my_current_node.getLeftChild());
+	childrenList.add(my_current_node.getRightChild());
+
+	return childrenList;
 
 
 }
+
+
+
+
+private class TreeElementIterator implements Iterator<E>{
+	
+	// Iterator on elements
+
+	Iterator<Position<E>> myPositionIterator; 
+
+	public TreeElementIterator(){
+
+
+		myPositionIterator = position().iterator();
+	}
+
+
+
+	public boolean hasNext(){
+		// return next element 
+
+		return myPositionIterator.hasNext();
+
+
+	}
+
+	public E next(){
+		// return element of next node
+		Position<E> myNextPosition = myPositionIterator.next();
+		Node<E> myNextNode = validate(myNextPosition);
+		return myNextNode.getElement();
+
+	}
+
+
+	public void remove(){
+		// remove last element returned by next
+
+
+	}
+
+}
+
+
+
+// Returns the iterator on Elements
+public Iterator<E> iterator(){ 
+
+
+	Iterator<E> myIterator_on_Elements = new TreeElementIterator();
+
+	return myIterator_on_Elements;
+
+ }
+
+// Return an Iterable on Postions
+ public Iterable<Position<E>> position(){
+
+
+ 	List<Position<E>> myPreorderList = new ArrayList<>();
+
+
+ 	Position<E> p = root();
+
+ 	preorder(myPreorderList,p);
+
+ 	return myPreorderList;
+
+
+ }
+
+ private void preorder(List<Position<E>> mycurrentList, Position<E> p){
+
+
+ 	mycurrentList.add(p);
+
+ 	for(Position<E> c : children(p)){
+
+ 		preorder(mycurrentList, c);}
+
+ }
+
+
+}
+
+
+
+
 
 
 
