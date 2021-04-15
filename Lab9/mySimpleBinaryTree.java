@@ -17,7 +17,7 @@ private static class Node<E> implements Position<E>{
 
 	private E element;
 	private Node<E> parent;
-	private Node<E> left;
+	private Node<E> left ;
 	private Node<E> right;
 
 
@@ -136,6 +136,8 @@ public Position<E> addLeft(Position<E> p, E myvalue){
 
 	Node<E> myNewNode = new Node(myvalue, parentNode, null, null);
 
+	myNewNode.setLeft(null);
+
 
 	parentNode.setLeft(myNewNode);
 
@@ -150,6 +152,7 @@ public Position<E> addRight(Position<E> p, E myvalue){
 
 	Node<E> myNewNode = new Node(myvalue, parentNode, null, null);
 
+	myNewNode.setRight(null);
 
 	parentNode.setRight(myNewNode);
 
@@ -185,11 +188,16 @@ public List<Position<E>> children(Position<E> p){
 
 	Node<E> my_current_node = validate(p);
 
+	if (my_current_node.getLeftChild() !=null) {
 	childrenList.add(my_current_node.getLeftChild());
+	}
+	if (my_current_node.getLeftChild() !=null){
 	childrenList.add(my_current_node.getRightChild());
+	}
 
 	return childrenList;
-
+	
+	
 
 }
 
@@ -220,7 +228,12 @@ private class TreeElementIterator implements Iterator<E>{
 
 	public E next(){
 		// return element of next node
+
+
+
 		Position<E> myNextPosition = myPositionIterator.next();
+
+
 		Node<E> myNextNode = validate(myNextPosition);
 		return myNextNode.getElement();
 
@@ -256,6 +269,8 @@ public Iterator<E> iterator(){
 
  	Position<E> p = root();
 
+
+
  	preorder(myPreorderList,p);
 
  	return myPreorderList;
@@ -268,11 +283,13 @@ public Iterator<E> iterator(){
 
  	mycurrentList.add(p);
 
+ 	if(p!=null){
+
  	for(Position<E> c : children(p)){
 
  		preorder(mycurrentList, c);}
 
- }
+ }}
 
 
 }
